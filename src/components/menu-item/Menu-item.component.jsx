@@ -7,7 +7,7 @@ const MenuItem = ({title,imageUrl, size, linkUrl}) => {
   const location = useLocation();
   console.log(location)
   return (
-    <div className={`${size} menu-item`} onClick={()=>navigate(`${location}${linkUrl}`)}>
+    <div className={`${size} menu-item`} onClick={()=>navigate(`${location.pathname}${linkUrl}`)}>
       <div className='background-image'
             style={{
             backgroundImage: `url(${imageUrl})`

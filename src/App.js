@@ -1,16 +1,9 @@
 import './App.css';
 import {Route, Routes} from "react-router-dom";
-import HomePage from './pages/HomePage'
+import HomePage from './pages/homePage/HomePage'
+import ShopPage from './pages/shopPage/ShopPage';
 
-const HatsPage = (props)=> {
 
-  console.log(props);
-  return (
-  <div>
-    <h1>Hats Page</h1>
-  </div>
-  );
-}
 
 
 function App() {
@@ -18,8 +11,8 @@ function App() {
     <div>
     <Routes>
 
-      <Route exact path="/home/j" element={<HomePage/>}/>
-      <Route path="/hats" element={<HatsPage/>}/>
+      <Route exact path="/" element={<HomePage/>}/>
+      <Route path="/shop" element={<ShopPage/>}/>
 
     </Routes>
       
