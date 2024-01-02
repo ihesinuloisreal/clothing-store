@@ -2,6 +2,7 @@ import './App.css';
 import {Route, Routes} from "react-router-dom";
 import HomePage from './pages/homePage/HomePage'
 import ShopPage from './pages/shopPage/ShopPage';
+import Header from './components/header/header.component';
 
 
 
@@ -9,6 +10,7 @@ import ShopPage from './pages/shopPage/ShopPage';
 function App() {
   return (
     <div>
+    <Header/>
     <Routes>
 
       <Route exact path="/" element={<HomePage/>}/>
