@@ -52,9 +52,9 @@ export const signInWithGoogle = async () => {
 };
 
  
-// export const Logout = () => signOut(auth).then(() => {
-//     // Sign-out successful.
-//   }).catch((error) => {
-//     // An error happened.
-//   });
+export const Logout = () => signOut(auth).then(() => {
+    // Sign-out successful.
+  }).catch((error) => {
+    // An error happened.
+  });
 
