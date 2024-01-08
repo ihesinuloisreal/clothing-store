@@ -1,8 +1,8 @@
 // import { FirebaseApp } from "firebase/app";
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import {getFirestore, collection, getDoc, setDoc, doc, onSnapshot} from "@firebase/firestore";
-import { getAuth, signInWithPopup, GoogleAuthProvider,signOut } from "firebase/auth";
+import {getFirestore, getDoc, setDoc, doc} from "@firebase/firestore";
+import { getAuth, signInWithPopup, GoogleAuthProvider,signOut, createUserWithEmailAndPassword } from "firebase/auth";
 
 
 // Your web app's Firebase configuration
@@ -28,35 +28,12 @@ const provider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {
     const userDetail = await signInWithPopup(auth, provider);
-    // console.log(userDetail.user)
     return userDetail;
-    // .then((result) => {
-    //     // This gives you a Google Access Token. You can use it to access the Google API.
-    //     const credential = GoogleAuthProvider.credentialFromResult(result);
-    //     const token = credential.accessToken;
-    //     // The signed-in user info.
-    //     const user = result.user;
-    //     // console.log(user);
-    //     // IdP data available using getAdditionalUserInfo(result)
-    //     // ...
-    // }).catch((error) => {
-    //     // Handle Errors here.
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     // The email of the user's account used.
-    //     const email = error.customData.email;
-    //     // The AuthCredential type that was used.
-    //     const credential = GoogleAuthProvider.credentialFromError(error);
-    //     // ...
-    // })
 };
-
 export const findAndCreateUser = async (authUser, additionalData) => {
   if (!authUser) return;
   const docRef = doc(firestore, `users/${authUser.uid}`);
   const docSnap =  await getDoc(docRef);
-  // const citiesRef = collection(firestore, dbName);
-  // console.log(docSnap);
   if (!docSnap.exists()) {
       const {displayName, email} = authUser;
       const createdAt = new Date();
