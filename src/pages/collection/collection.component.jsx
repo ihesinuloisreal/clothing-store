@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { selectCollection } from "../../redux/shop/shop.selector";
 
 import './collection.styles.scss';
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import CollectionItemComponent from "../../components/collection-item/collection-item.component";
 
 const CollectionPage = ({collection}) => {

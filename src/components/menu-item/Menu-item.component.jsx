@@ -5,6 +5,7 @@ import './menu-item.scss'
 const MenuItem = ({title,imageUrl, size, linkUrl}) => {
   const navigate = useNavigate();
   const location = useLocation();
+  // console.log(location.pathname + linkUrl);
   return (
     <div className={`${size} menu-item`} onClick={()=>navigate(`${location.pathname}${linkUrl}`)}>
       <div className='background-image'
