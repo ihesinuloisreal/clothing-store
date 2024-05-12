@@ -1,21 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { selectCollection } from "../../redux/shop/shop.selector";
-import collectionItemComponent from "../../components/collection-item/collection-item.component";
 
 import './collection.styles.scss';
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import CollectionItemComponent from "../../components/collection-item/collection-item.component";
 
-const CollectionPage = () => {
-    const {pathname} = useLocation();
-    console.log(pathname)
+const CollectionPage = ({collection}) => {
+    console.log(JSON.stringify( collection))
+    const {title, items} = collection
     return(
     <div className="collection-page">
-        <h2>Collection Page</h2>
+        <h2 className="title">{title}</h2>
+        <div className="items">
+            {
+                items.map(item => (
+                    <CollectionItemComponent key={item.id} item={item} />
+                ))
+            }
+        </div>
+
     </div>
 )}
-// const mapStateToProps = (state, ownProps) => ({
-//     collection: selectCollection(ownProps.id.collectionId)(state)
-// })
+const mapStateToProps = (state, ownProps) => {
+    console.log(ownProps.collectionId)
+    return {
+        collection: selectCollection(ownProps.collectionId)(state)
+    }
+    
+}
 
-export default CollectionPage;
+export default connect(mapStateToProps)(CollectionPage);

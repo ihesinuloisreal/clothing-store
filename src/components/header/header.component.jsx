@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import './header.styles.scss'
 import { Link } from "react-router-dom";
 import { createStructuredSelector } from "reselect";

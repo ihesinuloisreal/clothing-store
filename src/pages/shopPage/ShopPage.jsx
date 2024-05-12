@@ -1,17 +1,16 @@
+
 import React from 'react';
-import { Route, Routes, useLocation, useParams} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import CollectionOverviewComponent from '../../components/collection-overview/collection-overview.component';
-import CollectionPage from '../collection/collection.component';
+import Wrapper from '../../components/wrapper/wrapper.component';
 
 const ShopPage = () => {
-  const {pathname} = useLocation();
-  console.log(pathname);
   return (
     <div className='shop-page'>
     <Routes>
      <Route exact path="/" element={<CollectionOverviewComponent/>}/>
-     <Route path={`/:categoryId`} element={<CollectionPage/>}/>
+     <Route exact path={`/:collectionId`} element={<Wrapper/>}/>
     </Routes>
     </div>
   )
