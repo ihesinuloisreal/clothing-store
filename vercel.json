@@ -1,7 +1,7 @@
 {
     "rewrites": [
         {
-          "source": "/shop/:Id", "destination": "/"
+          "source": "/proxy/:match*", "destination": "https://example.com/:match*"
         }
       ]
 }
