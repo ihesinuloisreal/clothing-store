@@ -1,7 +1,7 @@
 {
-    "rewrite": [
+    "routes": [
         {
-          "source": "/(.*)", "destination": "/"
+          "source": "/(.*)", "destination": "/", "status" : 200
         }
       ]
 }
