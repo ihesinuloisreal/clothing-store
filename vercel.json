@@ -1,7 +1,7 @@
 {
     "rewrites": [
         {
-          "source": "/:match*", "destination": "https://clothing-store-7s3o.vercel.app/:match*"
+          "source": "/(.*)", "destination": "/", "status" : 200
         }
       ]
 }
