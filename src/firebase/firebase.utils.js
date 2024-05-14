@@ -26,9 +26,22 @@ export const auth = getAuth(app);
 
 const provider = new GoogleAuthProvider();
 
+// export const signInWithGoogle = async () => {
+//     const userDetail = await signInWithPopup(auth, provider);
+//     return userDetail;
+// };
 export const signInWithGoogle = async () => {
-    const userDetail = await signInWithPopup(auth, provider);
-    return userDetail;
+  const userDetail = await signInWithPopup(auth, provider).then((result) => {
+    const cred = GoogleAuthProvider.credentialFromResult(result);
+    const token = cred.accessToken;
+    const user = result.user;
+  }).catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    const email = error.customData.email;
+    const cred = GoogleAuthProvider.credentialFromError(error)
+  });
+  return userDetail;
 };
 export const findAndCreateUser = async (authUser, additionalData) => {
   if (!authUser) return;
@@ -53,9 +66,10 @@ export const findAndCreateUser = async (authUser, additionalData) => {
 }
 
  
-export const Logout = () => signOut(auth).then(() => {
+export const Logout = () => {
+  signOut(auth).then(() => {
     // Sign-out successful.
   }).catch((error) => {
     // An error happened.
-  });
+  })};
 
