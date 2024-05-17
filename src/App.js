@@ -29,7 +29,7 @@ class App extends React.Component {
       if (userAuth) {
         const docRef = await findAndCreateUser(userAuth);
         // console.log(docRef)
-        await onSnapshot(docRef, (snapShot) => {
+        onSnapshot(docRef, (snapShot) => {
           setCurrentUser ({
               id: snapShot.id,
               ...snapShot.data() 

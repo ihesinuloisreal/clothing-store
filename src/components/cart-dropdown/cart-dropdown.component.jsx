@@ -9,27 +9,28 @@ import CustomButton from "../button/custom-button.component";
 import CartItem from "../cart-item/cart-item.component";
 import { selectCartItems } from "../../redux/cart/cart.selectors";
 import { useNavigate } from "react-router-dom";
+import { CardDropdownComponent, CardItemsComponent, CustomCartDropdownBtn, EmptyStyle } from "./cart-dropdown.style";
 
 const CartDropdown = ({cartItems, dispatch}) => {
         const navigate = useNavigate();
         return(
-    <div className="cart-dropdown">
+    <CardDropdownComponent>
     
     
-        <div className="cart-items">
+        <CardItemsComponent>
         {
         cartItems.length ? 
             (
                 cartItems.map(cartItem => <CartItem key={cartItem.id} item={cartItem  }/>)
             ): 
-            ( <span className="empty-message">Your cart is empty</span>)}
-        </div> 
+            ( <EmptyStyle>Your cart is empty</EmptyStyle>)}
+        </CardItemsComponent> 
     
-        <CustomButton 
+        <CustomCartDropdownBtn 
             onClick={() => {navigate('/checkout');
 
-            dispatch(toggleCartHidden());}}>GO TO CHECKOUT</CustomButton>
-     </div>
+            dispatch(toggleCartHidden());}}>GO TO CHECKOUT</CustomCartDropdownBtn>
+     </CardDropdownComponent>
 )}
 
 const mapStateToProps = createStructuredSelector ({
