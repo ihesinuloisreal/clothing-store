@@ -1,7 +1,5 @@
-// import { FirebaseApp } from "firebase/app";
 import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-import {getFirestore, getDoc, setDoc, doc} from "@firebase/firestore";
+import {getFirestore, getDoc, setDoc, doc, docs, collection, writeBatch} from "@firebase/firestore";
 import { getAuth, signInWithPopup, GoogleAuthProvider,signOut } from "firebase/auth";
 
 
@@ -21,15 +19,10 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
 export const auth = getAuth(app);
-// const app = FirebaseApp.initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
 
 const provider = new GoogleAuthProvider();
 
-// export const signInWithGoogle = async () => {
-//     const userDetail = await signInWithPopup(auth, provider);
-//     return userDetail;
-// };
+// Sing in with google popup
 export const signInWithGoogle = async () => {
   const userDetail = await signInWithPopup(auth, provider).then((result) => {
     const cred = GoogleAuthProvider.credentialFromResult(result);
@@ -43,6 +36,8 @@ export const signInWithGoogle = async () => {
   });
   return userDetail;
 };
+
+// Find and create user function
 export const findAndCreateUser = async (authUser, additionalData) => {
   if (!authUser) return;
   const docRef = doc(firestore, `users/${authUser.uid}`);
@@ -63,9 +58,42 @@ export const findAndCreateUser = async (authUser, additionalData) => {
       }
     }
   return docRef;
+};
+
+// Adding batch data to my dataase
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+
+  const collectionRef = collection(firestore, collectionKey);
+  const batch = writeBatch(firestore);
+
+  objectsToAdd.forEach(obj => {
+    const newDoc = doc(collectionRef);
+    batch.set(newDoc, obj)
+    console.log(newDoc)
+  })
+  return await batch.commit(); 
+
+
 }
 
- 
+export const convertCollectionsSnapshot = (collections) => {
+  const transforemedCollection = collections.docs.map(doc => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    }
+  });
+  return transforemedCollection.reduce( (accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {})
+}
+
+// Logout Function
 export const Logout = () => {
   signOut(auth).then(() => {
     // Sign-out successful.
