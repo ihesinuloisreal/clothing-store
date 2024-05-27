@@ -10,7 +10,16 @@ import {firestore, convertCollectionsSnapshot} from '../../firebase/firebase.uti
 import { collection, onSnapshot } from 'firebase/firestore';
 import { updateCollections } from '../../redux/shop/shop.actions';
 
+import WithSpinner from '../../components/with-spinner/with-spinner.component';
+
+const CollectionOverviewWithSpinner = WithSpinner(CollectionOverviewComponent);
+const WrapperWithSpinner = WithSpinner(Wrapper);
+
 class ShopPage extends React.Component {
+  state = {
+    loading: true
+  };
+
   unsubscribFromSnapshot = null
   
   componentDidMount() {
@@ -19,16 +28,19 @@ class ShopPage extends React.Component {
 
     this.unsubscribFromSnapshot = onSnapshot(collectionRef, async (snapShot) => {
       const collectionsMap = convertCollectionsSnapshot(snapShot);
-      updateCollections(collectionsMap)
+      updateCollections(collectionsMap);
+      this.setState({ loading: false });
     })
   }
 
   render (){
+    const {...props} = this.props
+    const {loading} = this.state;
     return (
       <div className='shop-page'>
       <Routes>
-       <Route exact path="/" element={<CollectionOverviewComponent/>}/>
-       <Route exact path={`/:collectionId`} element={<Wrapper/>}/>
+       <Route exact path="/" element={<CollectionOverviewWithSpinner isLoading={loading} {...props}/>}/>
+       <Route exact path={`/:collectionId`} element={<WrapperWithSpinner isLoading={loading} {...props}/>}/>
       </Routes>
       </div>
     )
